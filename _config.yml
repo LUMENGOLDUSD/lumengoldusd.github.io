@@ -1,8 +1,2 @@
 include:
   - .well-known
-```
-5. Click **Commit new file**
-
-Then wait **2-3 minutes** and try the URL again:
-```
-https://lumengoldusd.github.io/.well-known/stellar.toml
