@@ -1,9 +1,12 @@
+VERSION="2.0.0"
+
 NETWORK_PASSPHRASE="Public Global Stellar Network ; September 2015"
 
 [DOCUMENTATION]
 ORG_NAME="LUMENGOLDUSD"
 ORG_URL="https://lumengoldusd.netlify.app"
 ORG_DESCRIPTION="LUMENGOLDUSD Token on the Stellar Network"
+ORG_LOGO="https://lumengoldusd.netlify.app/icon.png"
 
 [[CURRENCIES]]
 code="LUMENGOLDUSD"
@@ -11,6 +14,7 @@ issuer="GCO7DST6GPLM47NVHGCKPEOYEWE2IZBFGKPI3MXIZPQ5EIY7Q3AGAYZ4"
 display_decimals=2
 name="Lumen Gold USD"
 desc="LUMENGOLDUSD Token on the Stellar Network"
-image = "https://lumengoldusd.netlify.app/icon.png"
+image="https://lumengoldusd.netlify.app/icon.png"
 is_asset_anchored=false
+anchor_asset_type="other"
 status="live"
