@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMENGOLDUSD — Stellar Token</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #C9A84C; --gold-light: #E8CC7A; --gold-dim: rgba(201,168,76,0.15);
+      --bg: #0A0A08; --bg2: #111110; --text: #F0EBE0;
+      --muted: #7A7468; --border: rgba(201,168,76,0.2);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Mono', monospace; min-height: 100vh; overflow-x: hidden; }
+    body::after { content: ''; position: fixed; top: -20%; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 24px 48px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid transparent; transition: border-color 0.3s, background 0.3s; }
+    nav.scrolled { border-color: var(--border); background: rgba(10,10,8,0.85); backdrop-filter: blur(12px); }
+    .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--gold); letter-spacing: 0.1em; text-decoration: none; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--gold); }
+    .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 48px 80px; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); padding: 6px 16px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 48px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s; }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s ease infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .hero-icon { width: 100px; height: 100px; border-radius: 50%; border: 1px solid var(--border); margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s; background: var(--gold-dim); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .hero-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 8vw, 96px); font-weight: 300; line-height: 1; letter-spacing: -0.02em; margin-bottom: 8px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.5s; }
+    h1 span { color: var(--gold); }
+    .hero-subtitle { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s; }
+    .hero-desc { max-width: 480px; font-size: 13px; line-height: 1.8; color: var(--muted); margin-bottom: 56px; font-weight: 300; opacity: 0; animation: fadeUp 0.8s ease forwards 0.7s; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s; }
+    .btn-primary { background: var(--gold); color: var(--bg); padding: 14px 32px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.2s; display: inline-block; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-secondary { background: transparent; color: var(--gold); padding: 14px 32px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid var(--border); cursor: pointer; text-decoration: none; transition: border-color 0.2s, transform 0.2s; display: inline-block; }
+    .btn-secondary:hover { border-color: var(--gold); transform: translateY(-1px); }
+    .divider { width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, var(--gold), transparent); margin: 0 auto; opacity: 0.4; }
+    .stats { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--border); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stat { background: var(--bg); padding: 48px 40px; text-align: center; transition: background 0.3s; }
+    .stat:hover { background: var(--bg2); }
+    .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 12px; }
+    .stat-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .details { position: relative; z-index: 1; padding: 120px 48px; max-width: 900px; margin: 0 auto; }
+    .section-label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 48px; display: flex; align-items: center; gap: 16px; }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .detail-row { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--border); align-items: start; }
+    .detail-key { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+    .detail-value { font-size: 13px; color: var(--text); word-break: break-all; line-height: 1.6; }
+    .detail-value.gold { color: var(--gold); }
+    .copy-btn { display: inline-flex; align-items: center; gap: 8px; background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 10px; padding: 4px 10px; cursor: pointer; margin-top: 8px; transition: color 0.2s, border-color 0.2s; }
+    .copy-btn:hover { color: var(--gold); border-color: var(--gold); }
+    .network { position: relative; z-index: 1; padding: 80px 48px 120px; text-align: center; }
+    .network h2 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; margin-bottom: 16px; }
+    .network p { color: var(--muted); font-size: 13px; margin-bottom: 48px; line-height: 1.8; }
+    .network-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .network-link { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); padding: 12px 24px; color: var(--muted); text-decoration: none; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s, border-color 0.2s; }
+    .network-link:hover { color: var(--gold); border-color: var(--gold); }
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold); letter-spacing: 0.1em; }
+    .footer-text { font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+    .gold-line { width: 60px; height: 1px; background: var(--gold); margin: 0 auto 48px; opacity: 0.6; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) {
+      nav { padding: 20px 24px; } .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; } .stat { padding: 32px 24px; }
+      .details { padding: 80px 24px; } .detail-row { grid-template-columns: 1fr; gap: 8px; }
+      footer { padding: 32px 24px; } .network { padding: 60px 24px 80px; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <a href="#" class="nav-logo">LUMENGOLDUSD</a>
+    <ul class="nav-links">
+      <li><a href="#details">Details</a></li>
+      <li><a href="#network">Explore</a></li>
+      <li><a href="https://stellar.expert/explorer/public/asset/LUMENGOLDUSD-GCO7DST6GPLM47NVHGCKPEOYEWE2IZBFGKPI3MXIZPQ5EIY7Q3AGAYZ4" target="_blank">Stellar Expert</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">Live on Stellar Network</div>
+    <div class="hero-icon">
+      <img src="/icon.png" alt="LUMENGOLDUSD">
+    </div>
+    <h1>LUMEN<span>GOLD</span>USD</h1>
+    <p class="hero-subtitle">Stellar Network &middot; Digital Asset</p>
+    <p class="hero-desc">A digital token issued on the Stellar blockchain network, combining the stability of gold-backed value with the speed and efficiency of the Stellar protocol.</p>
+    <div class="hero-actions">
+      <a href="https://stellar.expert/explorer/public/asset/LUMENGOLDUSD-GCO7DST6GPLM47NVHGCKPEOYEWE2IZBFGKPI3MXIZPQ5EIY7Q3AGAYZ4" target="_blank" class="btn-primary">View on Stellar Expert</a>
+      <a href="#details" class="btn-secondary">Token Details</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="stats">
+    <div class="stat"><div class="stat-value">1T</div><div class="stat-label">Total Supply</div></div>
+    <div class="stat"><div class="stat-value">XLM</div><div class="stat-label">Network</div></div>
+    <div class="stat"><div class="stat-value">7</div><div class="stat-label">Decimal Places</div></div>
+    <div class="stat"><div class="stat-value">Live</div><div class="stat-label">Status</div></div>
+  </section>
+
+  <section class="details" id="details">
+    <div class="section-label">Token Information</div>
+    <div class="detail-row"><div class="detail-key">Asset Code</div><div class="detail-value gold">LUMENGOLDUSD</div></div>
+    <div class="detail-row"><div class="detail-key">Full Name</div><div class="detail-value">Lumen Gold USD</div></div>
+    <div class="detail-row">
+      <div class="detail-key">Issuer Address</div>
+      <div class="detail-value">GCO7DST6GPLM47NVHGCKPEOYEWE2IZBFGKPI3MXIZPQ5EIY7Q3AGAYZ4
+        <br><button class="copy-btn" onclick="copyText('GCO7DST6GPLM47NVHGCKPEOYEWE2IZBFGKPI3MXIZPQ5EIY7Q3AGAYZ4', this)">&#10697; Copy Address</button>
+      </div>
+    </div>
+    <div class="detail-row"><div class="detail-key">Network</div><div class="detail-value">Stellar Public Network</div></div>
+    <div class="detail-row"><div class="detail-key">Total Supply</div><div class="detail-value">1,000,000,000,000,000</div></div>
+    <div class="detail-row"><div class="detail-key">Decimals</div><div class="detail-value">7</div></div>
+    <div class="detail-row"><div class="detail-key">Asset Type</div><div class="detail-value">Alphanumeric 12 (non-anchored)</div></div>
+    <div class="detail-row"><div class="detail-key">Home Domain</div><div class="detail-value gold">lumengoldusd.netlify.app</div></div>
+    <div class="detail-row"><div class="detail-key">TOML</div><div class="detail-value"><a href="/.well-known/stellar.toml" style="color:var(--gold);text-decoration:none;">/.well-known/stellar.toml</a></div></div>
+  </section>
+
+  <section class="network" id="network">
+    <div class="gold-line"></div>
+    <h2>Explore the Asset</h2>
+    <p>Track trading activity, trustlines, and market data<br>across Stellar network explorers and DEX platforms.</p>
+    <div class="network-links">
+      <a href="https://stellar.expert/explorer/public/asset/LUMENGOLDUSD-GCO7DST6GPLM47NVHGCKPEOYEWE2IZBFGKPI3MXIZPQ5EIY7Q3AGAYZ4" target="_blank" class="network-link">&#8599; Stellar Expert</a>
+      <a href="https://stellarterm.com/#exchange/LUMENGOLDUSD-GCO7DST6GPLM47NVHGCKPEOYEWE2IZBFGKPI3MXIZPQ5EIY7Q3AGAYZ4/XLM-native" target="_blank" class="network-link">&#8599; StellarTerm</a>
+      <a href="https://lobstr.co/trade/LUMENGOLDUSD:GCO7DST6GPLM47NVHGCKPEOYEWE2IZBFGKPI3MXIZPQ5EIY7Q3AGAYZ4" target="_blank" class="network-link">&#8599; Lobstr</a>
+      <a href="https://horizon.stellar.org/accounts/GCO7DST6GPLM47NVHGCKPEOYEWE2IZBFGKPI3MXIZPQ5EIY7Q3AGAYZ4" target="_blank" class="network-link">&#8599; Horizon API</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">LUMENGOLDUSD</div>
+    <div class="footer-text">Issued on the Stellar Network &middot; lumengoldusd.netlify.app</div>
+    <div class="footer-text">&copy; 2025 LUMENGOLDUSD</div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 40); });
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = '&#10003; Copied';
+        btn.style.color = 'var(--gold)';
+        btn.style.borderColor = 'var(--gold)';
+        setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+      });
+    }
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.stat, .detail-row').forEach(el => {
+      el.style.opacity='0'; el.style.transform='translateY(16px)'; el.style.transition='opacity 0.6s ease, transform 0.6s ease';
+      obs.observe(el);
+    });
+  </script>
+</body>
